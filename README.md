@@ -1,6 +1,6 @@
 # Next.js 15+ Intercepting & Parallel Routes Demo
 
-A premium, high-performance demonstration of **Next.js 15+** advanced routing patterns. This project showcases how to create seamless "Modal-over-List" experiences using Intercepting Routes and Parallel Routes with a modern, glassmorphic UI.
+A premium, high-performance demonstration of **Next.js 16+** advanced routing patterns. This project showcases how to create seamless "Modal-over-List" experiences using Intercepting Routes and Parallel Routes with a modern, glassmorphic UI.
 
 ## ✨ Key Features
 
@@ -34,7 +34,7 @@ src/app/
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 15+](https://nextjs.org/)
+- **Framework**: [Next.js 16+](https://nextjs.org/)
 
 ## 🧠 Core Concepts
 
