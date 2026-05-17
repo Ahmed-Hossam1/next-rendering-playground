@@ -5,8 +5,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-blue-600 text-white hover:bg-blue-700",
-        outline: "border border-zinc-600 text-zinc-100 hover:bg-zinc-800 hover:border-zinc-500",
+        primary: "bg-primary text-white hover:bg-blue-700",
+        outline: "border border-zinc-600 text-zinc-950 dark:text-zinc-100 hover:text-primary dark:hover:text-primary hover:bg-zinc-800 hover:border-zinc-500",
         ghost: "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100",
         danger: "bg-red-600 text-white hover:bg-red-700",
       },
@@ -28,7 +28,7 @@ const buttonVariants = cva(
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   loading?: boolean;
 }
 
