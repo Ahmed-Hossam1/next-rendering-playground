@@ -62,7 +62,7 @@ export default function Home() {
             label="Variants"
             code={`<Button variant="primary">Primary</Button>\n<Button variant="outline">Outline</Button>\n<Button variant="ghost">Ghost</Button>\n<Button variant="danger">Danger</Button>`}
           >
-            <Button variant="primary">Primary</Button>
+            <Button variant="primary" rounded="full">Primary</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
             <Button variant="danger">Danger</Button>

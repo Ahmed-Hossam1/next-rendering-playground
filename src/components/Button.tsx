@@ -1,12 +1,13 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
+  "inline-flex items-center justify-center  font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
   {
     variants: {
       variant: {
         primary: "bg-primary text-white hover:bg-blue-700",
-        outline: "border border-zinc-600 text-zinc-950 dark:text-zinc-100 hover:text-primary dark:hover:text-primary hover:bg-zinc-800 hover:border-zinc-500",
+        outline:
+          "border border-zinc-600 text-zinc-950 dark:text-zinc-100 hover:text-primary dark:hover:text-primary hover:bg-zinc-800 hover:border-zinc-500",
         ghost: "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100",
         danger: "bg-red-600 text-white hover:bg-red-700",
       },
@@ -15,6 +16,13 @@ const buttonVariants = cva(
         md: "h-10 px-4 text-sm",
         lg: "h-12 px-6 text-base",
       },
+      rounded: {
+        none: "rounded-none",
+        sm: "rounded-sm",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        full: "rounded-full",
+      },
       fullWidth: {
         true: "w-full",
       },
@@ -22,13 +30,15 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: "primary",
       size: "md",
+      rounded: "lg"
     },
-  }
+  },
 );
 
 interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof buttonVariants> {
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   loading?: boolean;
 }
 
@@ -36,6 +46,7 @@ export default function Button({
   className,
   variant,
   size,
+  rounded,
   fullWidth,
   loading,
   children,
@@ -44,7 +55,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`${buttonVariants({ variant, size, fullWidth })} ${className ?? ""}`}
+      className={`${buttonVariants({ variant, size, rounded, fullWidth })} ${className ?? ""}`}
       disabled={disabled || loading}
       {...props}
     >
