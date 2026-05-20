@@ -15,9 +15,7 @@ function Section({
     <section className="mb-16 animate-in slide-up">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-1">{title}</h2>
-        {description && (
-          <p className="text-muted-foreground text-sm">{description}</p>
-        )}
+        {description && <p className="text-muted-foreground text-sm">{description}</p>}
         <div className="mt-3 h-px bg-linear-to-r from-primary/50 via-accent/30 to-transparent" />
       </div>
       {children}
@@ -65,15 +63,11 @@ export default function Home() {
             label="Variants"
             code={`<Button variant="primary">Primary</Button>\n<Button variant="outline">Outline</Button>\n<Button variant="ghost">Ghost</Button>\n<Button variant="danger">Danger</Button>`}
           >
-            <Button variant="primary" rounded="full">
-              Primary
-            </Button>
+            <Button variant="primary" rounded="full">Primary</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
             <Button variant="danger">Danger</Button>
-            <Link href={""} className={buttonVariants()}>
-              Link
-            </Link>
+            <Link href={""} className={`${buttonVariants()} h-12` } >Link</Link>
           </PreviewCard>
 
           <PreviewCard

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 
 export const buttonVariants = cva(
@@ -30,7 +31,7 @@ export const buttonVariants = cva(
     defaultVariants: {
       variant: "primary",
       size: "md",
-      rounded: "lg"
+      rounded: "lg",
     },
   },
 );
@@ -55,7 +56,10 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`${buttonVariants({ variant, size, rounded, fullWidth })} ${className ?? ""}`}
+      className={cn(
+        buttonVariants({ variant, size, rounded, fullWidth }),
+        className,
+      )}
       disabled={disabled || loading}
       {...props}
     >
