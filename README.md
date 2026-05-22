@@ -1,88 +1,78 @@
-# Next.js 16+ Intercepting & Parallel Routes Demo
+# Next-Gen Design System Experience (Next.js 16 + Tailwind CSS v4)
 
-A premium, high-performance demonstration of **Next.js 16+** advanced routing patterns. This project showcases how to create seamless "Modal-over-List" experiences using Intercepting Routes and Parallel Routes with a modern, glassmorphic UI.
+A premium, interactive design system showcase built using **Next.js 16 (App Router)** and **Tailwind CSS v4**. This repository serves as a workspace for training, demonstrating, and documenting modern component architectures, fluid theme adaptations, and production-ready component practices.
 
-## ✨ Key Features
+---
 
-- **🚀 Intercepting Routes (`(.)[slug]`)**: Navigate from the blog list to a specific post and see a quick-preview modal without losing your place in the list.
-- **🎨 Parallel Routes (`@modal`)**: Render modal content simultaneously with the main page content in a clean, decoupled folder structure.
-- **💎 Premium UI/UX**: 
-  - Glassmorphism design with backdrop blurs.
-  - Smooth fade and scale entry animations.
-  - Vibrant gradients using **Tailwind CSS 4**.
-  - Fully responsive and dark-mode optimized.
-- **🛠️ Advanced Interactivity**:
-  - Modal closing via Backdrop click and Escape key.
-  - "Break-out" navigation: Seamlessly transition from a modal preview to a full-page view.
-  - Type-safe implementation with TypeScript.
+## ✨ Features
 
-## 🏗️ Project Structure
+- **🚀 Modern Tech Stack**: Powered by Next.js 16, React 19, and the lightning-fast Tailwind CSS v4.
+- **🎨 Design Token System**: Fully configured CSS variables in `@layer base` supporting smooth transition transitions between light and dark modes (powered by `next-themes`).
+- **⚙️ Dynamic Component Sandbox**: A live, interactive playground where developers can customize components (adjusting variant, size, rounded corners, icons, and loading states) and instantly copy the dynamically generated JSX code.
+- **💎 Premium glassmorphism UI**: High-end visual assets, custom blurs, animated border gradients, and grid overlays that look stunning in both light and dark themes.
+- **🛠️ Type-Safe & Polymorphic Components**: Component interfaces designed for extensibility, clean variant configurations via `class-variance-authority` (cva), and Radix UI Slot composition (`asChild`).
 
-The project follows the standard Next.js App Router convention:
+---
+
+## 🏗️ Project Directory Structure
 
 ```text
-src/app/
-├── blogs/
-│   ├── [slug]/       # Full page view for blog posts
-│   ├── @modal/       # Parallel route slot for modals
-│   │   ├── (.)[slug]/ # Intercepted route matching blogs/[slug]
-│   │   └── default.tsx # Null fallback for the modal slot
-│   ├── layout.tsx    # Renders {children} and {modal}
-│   └── page.tsx      # Main blog listing page
-└── globals.css       # Custom design system & animations
+practice/
+├── docs/
+│   └── Button.md        # Detailed developer guide for the Button component
+├── public/              # Static assets and icons
+└── src/
+    ├── app/
+    │   ├── globals.css  # Core styling, custom keyframe animations, and Tailwind v4 theme mappings
+    │   ├── layout.tsx   # Root layout with provider setup (Theme providers)
+    │   └── page.tsx     # The interactive Design System landing page & playground
+    ├── components/
+    │   ├── Button.tsx   # Standard polymorphic Button component
+    │   ├── Navbar.tsx   # Global site header with theme switcher integration
+    │   └── ThemeChanger.tsx # Smooth-transition Theme Toggle (Sun/Moon icons)
+    ├── lib/
+    │   └── cn.tsx       # Classnames merging utility (clsx + tailwind-merge)
+    └── providers/       # Global React context providers (e.g. ThemeProvider)
 ```
 
-## 🛠️ Tech Stack
+---
 
-- **Framework**: [Next.js 16+](https://nextjs.org/)
+## 🛠️ Design System Theme Architecture
 
-## 🧠 Core Concepts
+Theme tokens are configured inside [src/app/globals.css](file:///d:/coding/Next%20Js/practice/src/app/globals.css) and exposed to Tailwind CSS v4 using the new inline configuration `@theme inline`:
 
-This project is built based on the official [Next.js Routing Documentation](https://nextjs.org/docs/app/building-your-application/routing).
+- **Light Mode (`:root`)**: Vibrant blues, soft zinc outlines, and clean white cards over a neutral light background.
+- **Dark Mode (`.dark`)**: Deep charcoal shades, glowing primary borders, and sleek glassmorphism panels.
 
-### 🛣️ Parallel Routes
-Parallel Routes allow you to simultaneously or conditionally render one or more pages in the same layout. In this project, the `@modal` slot is a **Parallel Route**.
-- **Slots**: Defined by folders starting with `@` (e.g., `@modal`).
-- **Usage**: They are passed as props to the shared `layout.tsx`.
-- **Benefits**: Perfect for complex dashboards or modals that need to maintain state while the URL changes.
-- 📖 [Learn more about Parallel Routes](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)
+All custom colors (such as `--primary`, `--border`, and `--muted`) can be accessed using standard utility classes (e.g., `bg-primary`, `border-border`, `text-muted-foreground`).
 
-### ⚡ Intercepting Routes
-Intercepting routes allow you to load a route from another part of your application within the current layout. This project uses the `(.)` convention.
-- **Conventions**:
-  - `(.)`: Matches segments on the **same level**.
-  - `(..)`: Matches segments **one level above**.
-  - `(...)`: Matches segments from the **root** app directory.
-- **The "Modal" Pattern**: When you click a blog link, Next.js **intercepts** the navigation and shows the content in the `@modal` slot instead of performing a full page transition.
-- 📖 [Learn more about Intercepting Routes](https://nextjs.org/docs/app/building-your-application/routing/intercepting-routes)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Icons**: Heroicons / SVG
-- **Language**: TypeScript
+---
+
+## 📚 Component Documentation
+
+Detailed API specifications, accessibility recommendations, and Do/Don't guides are maintained in the `docs/` folder:
+
+- 📑 [Button Component Developer Guide](file:///d:/coding/Next%20Js/practice/docs/Button.md)
+
+---
 
 ## 🚀 Getting Started
 
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-url>
-   ```
+Follow these steps to run the interactive playground locally:
 
-2. **Install dependencies**:
+1. **Install Dependencies**:
    ```bash
    npm install
    ```
 
-3. **Run the development server**:
+2. **Start the Development Server**:
    ```bash
    npm run dev
    ```
 
-4. **Visit the app**:
-   Open [http://localhost:3000](http://localhost:3000) and click **"Go to Blogs"**.
-
-## 📝 Important Notes
-
-- **Interception Logic**: Interception only happens during **soft navigation** (using `<Link>`). Direct URL entry or page refreshes will correctly trigger the full-page view.
-- **Breaking out of Modals**: To view the full page from a modal, the "Read Full Article" button uses a standard `<a>` tag to force a hard navigation, bypassing the interception logic as intended.
+3. **Explore the Design System**:
+   Open [http://localhost:3000](http://localhost:3000) in your browser to interact with the sandbox and browse the component gallery.
 
 ---
+
 Created with ❤️ by Antigravity AI
