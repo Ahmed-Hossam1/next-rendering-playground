@@ -41,7 +41,7 @@ interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  loading?: boolean;
+  isLoading?: boolean;
   asChild?: boolean;
 }
 
@@ -51,9 +51,9 @@ export default function Button({
   size,
   rounded,
   fullWidth,
-  loading,
+  children,
+  isLoading = false,
   asChild = false,
-  disabled,
   ...props
 }: ButtonProps) {
   const Comp = asChild ? Slot : "button";
@@ -63,9 +63,20 @@ export default function Button({
         buttonVariants({ variant, size, rounded, fullWidth }),
         className,
       )}
-      disabled={disabled || loading}
+      disabled={isLoading || props.disabled}
+      aria-busy={isLoading}
       {...props}
-    />
-    
+    >
+      {asChild ? (
+        children
+      ) : (
+        <>
+          {isLoading && (
+            <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          )}
+          {children}
+        </>
+      )}
+    </Comp>
   );
 }

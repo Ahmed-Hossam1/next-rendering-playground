@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/cn";
 
 /* ── Sun icon (light mode) ─────────────────────────────────────────────── */
 function SunIcon() {
@@ -70,17 +71,17 @@ export default function Navbar() {
         {/* Theme toggle */}
         <button
           id="theme-toggle"
-          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label={mounted ? (isDark ? "Switch to light mode" : "Switch to dark mode") : "Switch theme"}
           onClick={toggle}
-          className="
-            relative flex h-10 w-10 items-center justify-center
-            rounded-full border border-border
-            bg-muted text-muted-foreground
-            transition-all duration-300
-            hover:bg-primary hover:text-primary-foreground hover:border-primary
-            hover:scale-110 hover:shadow-lg hover:shadow-primary/30
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
-          "
+          className={cn(
+            "relative flex h-10 w-10 items-center justify-center",
+            "rounded-full border border-border",
+            "bg-muted text-muted-foreground",
+            "transition-all duration-300",
+            "hover:bg-primary hover:text-primary-foreground hover:border-primary",
+            "hover:scale-110 hover:shadow-lg hover:shadow-primary/30",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          )}
         >
           {/* Crossfade icons once mounted */}
           <span

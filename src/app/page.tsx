@@ -1,5 +1,7 @@
+"use client";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { useState } from "react";
 
 /* ─── Section wrapper ─────────────────────────────────────── */
 function Section({
@@ -57,25 +59,54 @@ function PreviewCard({
 
 /* ─── Page ────────────────────────────────────────────────── */
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleLogin() {
+    setIsLoading(true);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Logged in");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen px-6 py-12 max-w-6xl mx-auto">
       <Section title="Buttons" description="All button variants and sizes">
         <div className="grid gap-4">
           <PreviewCard
             label="Variants"
-            code={`<Button variant="primary">Primary</Button>\n<Button variant="outline">Outline</Button>\n<Button variant="ghost">Ghost</Button>\n<Button variant="danger">Danger</Button>`}
+            code={`<Button variant="primary">Primary</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="danger" asChild>
+  <Link href="/dashboard">Link</Link>
+</Button>`}
           >
             <Button variant="primary" rounded="full">
               Primary
             </Button>
+
             <Button variant="outline">Outline</Button>
+
             <Button variant="ghost">Ghost</Button>
-            <Button variant="danger">Danger</Button>
-            <Button variant={"danger"} asChild>
-              <Link href={"/dashboard"}>Link</Link>
+
+            <Button
+              variant="danger"
+              isLoading={isLoading}
+              onClick={handleLogin}
+            >
+              Danger
+            </Button>
+
+            <Button variant="primary">
+              <Link href="/dashboard">Link</Link>
             </Button>
           </PreviewCard>
-
+          {/* 
           <PreviewCard
             label="Sizes"
             code={`<Button size="sm">Small</Button>\n<Button size="md">Medium</Button>\n<Button size="lg">Large</Button>`}
@@ -89,8 +120,8 @@ export default function Home() {
             label="Loading state"
             code={`<Button loading>Loading…</Button>`}
           >
-            <Button loading>Loading…</Button>
-          </PreviewCard>
+            <Button>Loading…</Button>
+          </PreviewCard> */}
         </div>
       </Section>
     </div>
