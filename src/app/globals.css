@@ -93,7 +93,22 @@
   .fade-in  { animation-name: fade-in; }
   .zoom-in  { animation-name: zoom-in; }
   .slide-up { animation-name: slide-up; }
+
+  .bg-grid {
+    background-size: 24px 24px;
+    background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  }
+
+  .mask-radial {
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  .glow-radial {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 100%);
+  }
 }
+
 
 /* ─── Keyframes ──────────────────────────────────────────────────────────── */
 @keyframes fade-in {

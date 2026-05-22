@@ -71,7 +71,13 @@ export default function Navbar() {
         {/* Theme toggle */}
         <button
           id="theme-toggle"
-          aria-label={mounted ? (isDark ? "Switch to light mode" : "Switch to dark mode") : "Switch theme"}
+          aria-label={
+            mounted
+              ? isDark
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+              : "Switch theme"
+          }
           onClick={toggle}
           className={cn(
             "relative flex h-10 w-10 items-center justify-center",
@@ -80,7 +86,7 @@ export default function Navbar() {
             "transition-all duration-300",
             "hover:bg-primary hover:text-primary-foreground hover:border-primary",
             "hover:scale-110 hover:shadow-lg hover:shadow-primary/30",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           )}
         >
           {/* Crossfade icons once mounted */}
@@ -88,7 +94,10 @@ export default function Navbar() {
             className="absolute transition-all duration-300"
             style={{
               opacity: mounted && isDark ? 1 : 0,
-              transform: mounted && isDark ? "rotate(0deg) scale(1)" : "rotate(-90deg) scale(0.5)",
+              transform:
+                mounted && isDark
+                  ? "rotate(0deg) scale(1)"
+                  : "rotate(-90deg) scale(0.5)",
             }}
           >
             <SunIcon />
@@ -97,7 +106,10 @@ export default function Navbar() {
             className="absolute transition-all duration-300"
             style={{
               opacity: mounted && !isDark ? 1 : 0,
-              transform: mounted && !isDark ? "rotate(0deg) scale(1)" : "rotate(90deg) scale(0.5)",
+              transform:
+                mounted && !isDark
+                  ? "rotate(0deg) scale(1)"
+                  : "rotate(90deg) scale(0.5)",
             }}
           >
             <MoonIcon />
