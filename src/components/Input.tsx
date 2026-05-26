@@ -98,15 +98,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {label}
           </label>
         )}
-        {leftIcon && (
-          <div className="text-muted-foreground flex items-center justify-center shrink-0">
-            {leftIcon}
-          </div>
-        )}
-        <input
-          id={inputId}
-          ref={ref}
-          disabled={Disabled || undefined}
+        <div
           className={cn(
             containerVariants({
               variant,
@@ -119,13 +111,25 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             }),
             className,
           )}
-          {...props}
-        />
-        {rightIcon && (
-          <div className="text-muted-foreground flex items-center justify-center shrink-0">
-            {rightIcon}
-          </div>
-        )}
+        >
+          {leftIcon && (
+            <div className="text-muted-foreground flex items-center justify-center shrink-0">
+              {leftIcon}
+            </div>
+          )}
+          <input
+            id={inputId}
+            ref={ref}
+            disabled={Disabled || undefined}
+            className="w-full bg-transparent outline-none h-full border-none p-0 text-inherit placeholder:text-muted-foreground/60 disabled:cursor-not-allowed"
+            {...props}
+          />
+          {rightIcon && (
+            <div className="text-muted-foreground flex items-center justify-center shrink-0">
+              {rightIcon}
+            </div>
+          )}
+        </div>
         {errorText && (
           <p className="text-xs text-red-500 font-medium tracking-wide">
             {errorText}
