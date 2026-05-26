@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import Input from "@/components/Input";
 import { cn } from "@/lib/cn";
 import { useState } from "react";
 
@@ -19,7 +20,9 @@ function Section({
       <div className="mb-4">
         <h3 className="text-lg font-bold text-foreground mb-1">{title}</h3>
         {description && (
-          <p className="text-muted-foreground text-xs leading-relaxed">{description}</p>
+          <p className="text-muted-foreground text-xs leading-relaxed">
+            {description}
+          </p>
         )}
         <div className="mt-3 h-px bg-linear-to-r from-primary/50 via-accent/30 to-transparent" />
       </div>
@@ -53,17 +56,37 @@ function CodeBlock({ code }: { code: string }) {
           "absolute right-2 top-2 p-1.5 rounded-lg border border-border bg-card/90 text-muted-foreground transition-all duration-200",
           "hover:bg-primary hover:text-white hover:border-primary hover:scale-105 active:scale-95",
           "opacity-0 group-hover/code:opacity-100 focus:opacity-100",
-          "flex items-center justify-center cursor-pointer"
+          "flex items-center justify-center cursor-pointer",
         )}
         title="Copy code"
       >
         {copied ? (
-          <svg className="h-3.5 w-3.5 text-emerald-500 animate-in zoom-in" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          <svg
+            className="h-3.5 w-3.5 text-emerald-500 animate-in zoom-in"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
           </svg>
         ) : (
-          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          <svg
+            className="h-3.5 w-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+            />
           </svg>
         )}
       </button>
@@ -121,12 +144,18 @@ export default function Home() {
   const [asyncLoading, setAsyncLoading] = useState(false);
 
   // Playground/Sandbox States
-  const [sbVariant, setSbVariant] = useState<"primary" | "outline" | "ghost" | "danger">("primary");
+  const [sbVariant, setSbVariant] = useState<
+    "primary" | "outline" | "ghost" | "danger"
+  >("primary");
   const [sbSize, setSbSize] = useState<"sm" | "md" | "lg" | "icon">("md");
-  const [sbRounded, setSbRounded] = useState<"none" | "sm" | "md" | "lg" | "full">("lg");
+  const [sbRounded, setSbRounded] = useState<
+    "none" | "sm" | "md" | "lg" | "full"
+  >("lg");
   const [sbIsLoading, setSbIsLoading] = useState(false);
   const [sbHasIcon, setSbHasIcon] = useState(false);
-  const [sbIconPosition, setSbIconPosition] = useState<"left" | "right">("left");
+  const [sbIconPosition, setSbIconPosition] = useState<"left" | "right">(
+    "left",
+  );
   const [sbFullWidth, setSbFullWidth] = useState(false);
   const [sbText, setSbText] = useState("Interactive Button");
 
@@ -170,7 +199,7 @@ export default function Home() {
       <section className="relative pt-12 pb-16 overflow-hidden">
         {/* Dotted Grid Background */}
         <div className="absolute inset-0 bg-grid mask-radial opacity-35 dark:opacity-20 pointer-events-none" />
-        
+
         {/* Glowing backdrop blobs */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] glow-radial mask-radial pointer-events-none" />
 
@@ -188,22 +217,38 @@ export default function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8 animate-in slide-up" style={{ animationDelay: "100ms" }}>
-            A meticulously crafted collection of responsive, themeable, and highly interactive components. Accelerate your web application development with style and confidence.
+          <p
+            className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8 animate-in slide-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            A meticulously crafted collection of responsive, themeable, and
+            highly interactive components. Accelerate your web application
+            development with style and confidence.
           </p>
 
           {/* Actions */}
-          <div className="flex flex-wrap gap-4 items-center justify-center animate-in slide-up" style={{ animationDelay: "200ms" }}>
-            <Button 
-              variant="primary" 
-              onClick={() => document.getElementById("sandbox")?.scrollIntoView({ behavior: "smooth" })}
+          <div
+            className="flex flex-wrap gap-4 items-center justify-center animate-in slide-up"
+            style={{ animationDelay: "200ms" }}
+          >
+            <Button
+              variant="primary"
+              onClick={() =>
+                document
+                  .getElementById("sandbox")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               className="shadow-lg shadow-primary/25 cursor-pointer"
             >
               Try Sandbox
             </Button>
-            <Button 
-              variant="outline" 
-              onClick={() => document.getElementById("components")?.scrollIntoView({ behavior: "smooth" })}
+            <Button
+              variant="outline"
+              onClick={() =>
+                document
+                  .getElementById("components")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               className="cursor-pointer"
             >
               Explore Components
@@ -218,13 +263,26 @@ export default function Home() {
         <div className="glass rounded-2xl p-6 glass-hover relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors" />
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
             </svg>
           </div>
-          <h3 className="text-base font-bold text-foreground mb-2">Performance First</h3>
+          <h3 className="text-base font-bold text-foreground mb-2">
+            Performance First
+          </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Optimized for speed and core web vitals. Styled with Tailwind CSS v4 to guarantee tiny CSS bundles and zero runtime overhead.
+            Optimized for speed and core web vitals. Styled with Tailwind CSS v4
+            to guarantee tiny CSS bundles and zero runtime overhead.
           </p>
         </div>
 
@@ -232,13 +290,26 @@ export default function Home() {
         <div className="glass rounded-2xl p-6 glass-hover relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl group-hover:bg-accent/10 transition-colors" />
           <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent mb-4">
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
             </svg>
           </div>
-          <h3 className="text-base font-bold text-foreground mb-2">Adaptive Theme System</h3>
+          <h3 className="text-base font-bold text-foreground mb-2">
+            Adaptive Theme System
+          </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Full light and dark mode integration out of the box. Fluid transitions and persistent theme choices via next-themes.
+            Full light and dark mode integration out of the box. Fluid
+            transitions and persistent theme choices via next-themes.
           </p>
         </div>
 
@@ -246,23 +317,42 @@ export default function Home() {
         <div className="glass rounded-2xl p-6 glass-hover relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/10 transition-colors" />
           <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4">
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+              />
             </svg>
           </div>
-          <h3 className="text-base font-bold text-foreground mb-2">Developer Experience</h3>
+          <h3 className="text-base font-bold text-foreground mb-2">
+            Developer Experience
+          </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Strictly typed with TypeScript, built on Radix UI primitives, and packaged with detailed usage guides for rapid development.
+            Strictly typed with TypeScript, built on Radix UI primitives, and
+            packaged with detailed usage guides for rapid development.
           </p>
         </div>
       </section>
 
       {/* ─── Interactive Sandbox ─── */}
-      <section id="sandbox" className="py-12 scroll-mt-20 border-t border-border/80">
+      <section
+        id="sandbox"
+        className="py-12 scroll-mt-20 border-t border-border/80"
+      >
         <div className="text-center max-w-xl mx-auto mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Component Sandbox</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+            Component Sandbox
+          </h2>
           <p className="text-muted-foreground text-xs md:text-sm">
-            Configure properties in real time to customize the button component. Copy the generated code block below with one click.
+            Configure properties in real time to customize the button component.
+            Copy the generated code block below with one click.
           </p>
         </div>
 
@@ -272,11 +362,11 @@ export default function Home() {
             {/* Decorative gradient blob */}
             <div className="absolute -right-16 -top-16 w-36 h-36 rounded-full bg-primary/10 blur-2xl" />
             <div className="absolute -left-16 -bottom-16 w-36 h-36 rounded-full bg-accent/10 blur-2xl" />
-            
+
             <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4 z-10">
               Live Preview
             </div>
-            
+
             <div className="flex-1 flex items-center justify-center p-8 z-10">
               <Button
                 variant={sbVariant}
@@ -285,15 +375,23 @@ export default function Home() {
                 isLoading={sbIsLoading}
                 fullWidth={sbFullWidth}
               >
-                {!sbIsLoading && sbHasIcon && sbIconPosition === "left" && sbSize !== "icon" && <Icon />}
+                {!sbIsLoading &&
+                  sbHasIcon &&
+                  sbIconPosition === "left" &&
+                  sbSize !== "icon" && <Icon />}
                 {sbSize !== "icon" ? sbText : <Icon />}
-                {!sbIsLoading && sbHasIcon && sbIconPosition === "right" && sbSize !== "icon" && <Icon />}
+                {!sbIsLoading &&
+                  sbHasIcon &&
+                  sbIconPosition === "right" &&
+                  sbSize !== "icon" && <Icon />}
               </Button>
             </div>
-            
+
             {/* Code snippet shown under the preview */}
             <div className="z-10 mt-6 pt-4 border-t border-border/50">
-              <p className="text-[10px] font-bold text-muted-foreground mb-1 uppercase tracking-widest">Generated Code</p>
+              <p className="text-[10px] font-bold text-muted-foreground mb-1 uppercase tracking-widest">
+                Generated Code
+              </p>
               <CodeBlock code={generateSandboxCode()} />
             </div>
           </div>
@@ -304,45 +402,53 @@ export default function Home() {
               <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4">
                 Configure Properties
               </div>
-              
+
               <div className="flex flex-col gap-4">
                 {/* Text input */}
                 {sbSize !== "icon" && (
                   <div>
-                    <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">Button Text</label>
-                    <input 
-                      type="text" 
-                      value={sbText} 
+                    <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">
+                      Button Text
+                    </label>
+                    <input
+                      type="text"
+                      value={sbText}
                       onChange={(e) => setSbText(e.target.value)}
                       className="w-full h-9 px-3 bg-muted/30 border border-border rounded-xl text-xs text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:bg-muted/70 transition-all"
                     />
                   </div>
                 )}
-                
+
                 {/* Variant */}
                 <div>
-                  <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">Variant</label>
+                  <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">
+                    Variant
+                  </label>
                   <div className="grid grid-cols-2 gap-2">
-                    {(["primary", "outline", "ghost", "danger"] as const).map((v) => (
-                      <button
-                        key={v}
-                        onClick={() => setSbVariant(v)}
-                        className={cn(
-                          "h-8 text-xs font-semibold rounded-lg border transition-all cursor-pointer",
-                          sbVariant === v 
-                            ? "bg-primary text-white border-primary shadow-xs shadow-primary/20" 
-                            : "bg-muted/10 text-muted-foreground border-border hover:bg-muted/30 hover:text-foreground"
-                        )}
-                      >
-                        {v.charAt(0).toUpperCase() + v.slice(1)}
-                      </button>
-                    ))}
+                    {(["primary", "outline", "ghost", "danger"] as const).map(
+                      (v) => (
+                        <button
+                          key={v}
+                          onClick={() => setSbVariant(v)}
+                          className={cn(
+                            "h-8 text-xs font-semibold rounded-lg border transition-all cursor-pointer",
+                            sbVariant === v
+                              ? "bg-primary text-white border-primary shadow-xs shadow-primary/20"
+                              : "bg-muted/10 text-muted-foreground border-border hover:bg-muted/30 hover:text-foreground",
+                          )}
+                        >
+                          {v.charAt(0).toUpperCase() + v.slice(1)}
+                        </button>
+                      ),
+                    )}
                   </div>
                 </div>
 
                 {/* Size */}
                 <div>
-                  <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">Size</label>
+                  <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">
+                    Size
+                  </label>
                   <div className="grid grid-cols-4 gap-2">
                     {(["sm", "md", "lg", "icon"] as const).map((s) => (
                       <button
@@ -350,9 +456,9 @@ export default function Home() {
                         onClick={() => setSbSize(s)}
                         className={cn(
                           "h-8 text-xs font-semibold rounded-lg border transition-all cursor-pointer",
-                          sbSize === s 
-                            ? "bg-primary text-white border-primary shadow-xs" 
-                            : "bg-muted/10 text-muted-foreground border-border hover:bg-muted/30 hover:text-foreground"
+                          sbSize === s
+                            ? "bg-primary text-white border-primary shadow-xs"
+                            : "bg-muted/10 text-muted-foreground border-border hover:bg-muted/30 hover:text-foreground",
                         )}
                       >
                         {s.toUpperCase()}
@@ -363,7 +469,9 @@ export default function Home() {
 
                 {/* Rounded */}
                 <div>
-                  <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">Rounded Corners</label>
+                  <label className="block text-2xs font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">
+                    Rounded Corners
+                  </label>
                   <div className="grid grid-cols-5 gap-1.5">
                     {(["none", "sm", "md", "lg", "full"] as const).map((r) => (
                       <button
@@ -371,9 +479,9 @@ export default function Home() {
                         onClick={() => setSbRounded(r)}
                         className={cn(
                           "h-8 text-[11px] font-semibold rounded-lg border transition-all cursor-pointer",
-                          sbRounded === r 
-                            ? "bg-primary text-white border-primary shadow-xs" 
-                            : "bg-muted/10 text-muted-foreground border-border hover:bg-muted/30 hover:text-foreground"
+                          sbRounded === r
+                            ? "bg-primary text-white border-primary shadow-xs"
+                            : "bg-muted/10 text-muted-foreground border-border hover:bg-muted/30 hover:text-foreground",
                         )}
                       >
                         {r.charAt(0).toUpperCase() + r.slice(1)}
@@ -390,9 +498,9 @@ export default function Home() {
                 <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                   Loading Spinner
                 </span>
-                <input 
-                  type="checkbox" 
-                  checked={sbIsLoading} 
+                <input
+                  type="checkbox"
+                  checked={sbIsLoading}
                   onChange={(e) => setSbIsLoading(e.target.checked)}
                   className="rounded border-border text-primary focus:ring-primary h-4 w-4 bg-muted"
                 />
@@ -404,9 +512,9 @@ export default function Home() {
                     <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                       Include Icon
                     </span>
-                    <input 
-                      type="checkbox" 
-                      checked={sbHasIcon} 
+                    <input
+                      type="checkbox"
+                      checked={sbHasIcon}
                       onChange={(e) => setSbHasIcon(e.target.checked)}
                       className="rounded border-border text-primary focus:ring-primary h-4 w-4 bg-muted"
                     />
@@ -414,13 +522,17 @@ export default function Home() {
 
                   {sbHasIcon && (
                     <div className="flex items-center justify-between pl-4">
-                      <span className="text-2xs text-muted-foreground font-semibold uppercase tracking-wider">Icon Position</span>
+                      <span className="text-2xs text-muted-foreground font-semibold uppercase tracking-wider">
+                        Icon Position
+                      </span>
                       <div className="flex rounded-lg bg-muted/40 p-0.5 border border-border">
                         <button
                           onClick={() => setSbIconPosition("left")}
                           className={cn(
                             "px-2.5 py-1 text-[10px] font-semibold rounded-md transition-colors cursor-pointer",
-                            sbIconPosition === "left" ? "bg-card text-foreground shadow-2xs" : "text-muted-foreground hover:text-foreground"
+                            sbIconPosition === "left"
+                              ? "bg-card text-foreground shadow-2xs"
+                              : "text-muted-foreground hover:text-foreground",
                           )}
                         >
                           Left
@@ -429,7 +541,9 @@ export default function Home() {
                           onClick={() => setSbIconPosition("right")}
                           className={cn(
                             "px-2.5 py-1 text-[10px] font-semibold rounded-md transition-colors cursor-pointer",
-                            sbIconPosition === "right" ? "bg-card text-foreground shadow-2xs" : "text-muted-foreground hover:text-foreground"
+                            sbIconPosition === "right"
+                              ? "bg-card text-foreground shadow-2xs"
+                              : "text-muted-foreground hover:text-foreground",
                           )}
                         >
                           Right
@@ -444,9 +558,9 @@ export default function Home() {
                 <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                   Full Width
                 </span>
-                <input 
-                  type="checkbox" 
-                  checked={sbFullWidth} 
+                <input
+                  type="checkbox"
+                  checked={sbFullWidth}
                   onChange={(e) => setSbFullWidth(e.target.checked)}
                   className="rounded border-border text-primary focus:ring-primary h-4 w-4 bg-muted"
                 />
@@ -457,17 +571,26 @@ export default function Home() {
       </section>
 
       {/* ─── Component Gallery ─── */}
-      <section id="components" className="pt-12 pb-16 scroll-mt-20 border-t border-border/80">
+      <section
+        id="components"
+        className="pt-12 pb-16 scroll-mt-20 border-t border-border/80"
+      >
         <div className="mb-10 text-center md:text-left">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Component Gallery</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+            Component Gallery
+          </h2>
           <p className="text-muted-foreground text-xs md:text-sm">
-            A comprehensive overview of pre-configured variants, dimensions, status modes, and layouts.
+            A comprehensive overview of pre-configured variants, dimensions,
+            status modes, and layouts.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Colors showcase */}
-          <Section title="Color Variations" description="Different functional button types to match brand color schemes.">
+          <Section
+            title="Color Variations"
+            description="Different functional button types to match brand color schemes."
+          >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <PreviewCard
                 label="Primary"
@@ -500,7 +623,10 @@ export default function Home() {
           </Section>
 
           {/* Sizes showcase */}
-          <Section title="Dimensions & Sizing" description="Prepackaged button sizing configurations including full block widths.">
+          <Section
+            title="Dimensions & Sizing"
+            description="Prepackaged button sizing configurations including full block widths."
+          >
             <div className="flex flex-col gap-4">
               <PreviewCard
                 label="Fixed Height Variations"
@@ -531,7 +657,10 @@ export default function Home() {
           </Section>
 
           {/* State indicators showcase */}
-          <Section title="State Indicators" description="Interactive components showing background tasks or loader feedback.">
+          <Section
+            title="State Indicators"
+            description="Interactive components showing background tasks or loader feedback."
+          >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <PreviewCard
                 label="Processing / Loading"
@@ -557,7 +686,10 @@ export default function Home() {
           </Section>
 
           {/* Icon integrations showcase */}
-          <Section title="Icon Integrations" description="Supports preceding, succeeding, and standalone icon-only layouts.">
+          <Section
+            title="Icon Integrations"
+            description="Supports preceding, succeeding, and standalone icon-only layouts."
+          >
             <div className="flex flex-col gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <PreviewCard
@@ -609,9 +741,15 @@ export default function Home() {
           &copy; {new Date().getFullYear()} Ahmed Hossam. All rights reserved.
         </div>
         <div className="flex items-center gap-6">
-          <a href="#" className="hover:text-foreground transition-colors">Documentation</a>
-          <a href="#" className="hover:text-foreground transition-colors">Components</a>
-          <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
+          <a href="#" className="hover:text-foreground transition-colors">
+            Documentation
+          </a>
+          <a href="#" className="hover:text-foreground transition-colors">
+            Components
+          </a>
+          <a href="#" className="hover:text-foreground transition-colors">
+            GitHub
+          </a>
         </div>
       </footer>
     </div>

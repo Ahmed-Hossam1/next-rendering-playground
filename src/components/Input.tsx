@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 import { cva, type VariantProps } from "class-variance-authority";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useId } from "react";
 
 const inputVariants = cva(
   "w-full rounded-md border outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-zinc-400 focus-visible:ring-2",
@@ -26,20 +26,46 @@ const inputVariants = cva(
 
 interface InputProps
   extends
-  InputHTMLAttributes<HTMLInputElement>,
-  VariantProps<typeof inputVariants> {
+    InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputVariants> {
   className?: string;
+  label?: string;
+  id?: string;
   error?: string;
+  helperText?: string;
 }
-const Input = ({ Variant, Size, className, error, ...props }: InputProps) => {
+const Input = ({
+  Variant,
+  Size,
+  className,
+  error,
+  id,
+  label,
+  helperText,
+  ...props
+}: InputProps) => {
+  const generateId = useId();
+  const inputId = id || generateId;
   return (
-    <>
+    <div className="space-y-2">
+      {label && (
+        <label
+          className="text-sm font-medium text-foreground"
+          htmlFor={inputId}
+        >
+          {label}
+        </label>
+      )}
       <input
+        id={inputId}
         className={cn(inputVariants({ Variant, Size }), className)}
         {...props}
       />
+      {helperText && (
+        <p className="text-xs text-muted-foreground">{helperText}</p>
+      )}
       {error && <p className="text-xs text-red-500">{error}</p>}
-    </>
+    </div>
   );
 };
 

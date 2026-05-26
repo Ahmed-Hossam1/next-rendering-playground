@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import Input from "./Input";
 
 /* ── Sun icon (light mode) ─────────────────────────────────────────────── */
 function SunIcon() {
@@ -67,6 +68,7 @@ export default function Navbar() {
         <span className="text-lg font-bold tracking-tight gradient-text select-none">
           Design System
         </span>
+
 
         {/* Theme toggle */}
         <button
