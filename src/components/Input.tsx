@@ -1,72 +1,151 @@
 import { cn } from "@/lib/cn";
 import { cva, type VariantProps } from "class-variance-authority";
-import { InputHTMLAttributes, useId } from "react";
+import * as React from "react";
 
-const inputVariants = cva(
-  "w-full rounded-md border outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-zinc-400 focus-visible:ring-2",
+const containerVariants = cva(
+  "flex w-full items-center gap-2 border bg-background outline-none transition-all duration-200 focus-within:ring-2",
   {
     variants: {
-      Variant: {
-        outline: "border-border bg-background focus-visible:ring-primary",
+      variant: {
+        outline:
+          "border-border focus-within:border-primary focus-within:ring-primary/20",
         filled:
-          "border-transparent bg-zinc-100 focus-visible:ring-primary dark:bg-zinc-800",
-        ghost: "border-transparent bg-transparent focus-visible:ring-primary",
+          "border-transparent bg-muted focus-within:ring-primary/20 dark:bg-zinc-800 focus-within:bg-background",
+        ghost: "border-transparent bg-transparent focus-within:ring-primary/20",
       },
       Size: {
-        sm: "h-8 px-2 text-sm",
-        md: "h-10 px-3 text-sm",
-        lg: "h-12 px-4 text-base",
+        sm: "h-8 px-2.5 text-xs",
+        md: "h-10 px-3.5 text-sm",
+        lg: "h-12 px-4.5 text-base",
+      },
+      rounded: {
+        none: "rounded-none",
+        sm: "rounded-sm",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        full: "rounded-full",
+      },
+      error: {
+        true: "border-red-500 focus-within:border-red-500 focus-within:ring-red-500/20",
+      },
+      success: {
+        true: "border-emerald-500 focus-within:border-emerald-500 focus-within:ring-emerald-500/20",
+      },
+      Disabled: {
+        true: "opacity-50 cursor-not-allowed bg-zinc-50 dark:bg-zinc-900/50",
+      },
+      fullWidth: {
+        true: "w-full",
       },
     },
     defaultVariants: {
-      Variant: "outline",
+      variant: "outline",
+      Size: "md",
+      rounded: "lg",
     },
   },
 );
 
-interface InputProps
+export interface InputProps
   extends
-    InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants> {
-  className?: string;
-  label?: string;
+    React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof containerVariants> {
   id?: string;
-  error?: string;
+  label?: string;
   helperText?: string;
+  successText?: string;
+  errorText?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  className?: string;
 }
-const Input = ({
-  Variant,
-  Size,
-  className,
-  error,
-  id,
-  label,
-  helperText,
-  ...props
-}: InputProps) => {
-  const generateId = useId();
-  const inputId = id || generateId;
-  return (
-    <div className="space-y-2">
-      {label && (
-        <label
-          className="text-sm font-medium text-foreground"
-          htmlFor={inputId}
-        >
-          {label}
-        </label>
-      )}
-      <input
-        id={inputId}
-        className={cn(inputVariants({ Variant, Size }), className)}
-        {...props}
-      />
-      {helperText && (
-        <p className="text-xs text-muted-foreground">{helperText}</p>
-      )}
-      {error && <p className="text-xs text-red-500">{error}</p>}
-    </div>
-  );
-};
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      variant,
+      Size,
+      rounded,
+      error,
+      success,
+      Disabled,
+      fullWidth,
+      label,
+      helperText,
+      successText,
+      errorText,
+      leftIcon,
+      rightIcon,
+      className,
+      id,
+      ...props
+    },
+    ref,
+  ) => {
+    const generatedId = React.useId();
+    const inputId = id || generatedId;
+
+    const isError = !!error || !!errorText;
+    const isSuccess = !!success || !!successText;
+
+    return (
+      <div className={cn("flex flex-col gap-1.5", fullWidth && "w-full")}>
+        {label && (
+          <label
+            htmlFor={inputId}
+            className="text-xs font-bold text-muted-foreground uppercase tracking-wider select-none"
+          >
+            {label}
+          </label>
+        )}
+        {leftIcon && (
+          <div className="text-muted-foreground flex items-center justify-center shrink-0">
+            {leftIcon}
+          </div>
+        )}
+        <input
+          id={inputId}
+          ref={ref}
+          disabled={Disabled || undefined}
+          className={cn(
+            containerVariants({
+              variant,
+              Size,
+              rounded,
+              fullWidth,
+              Disabled,
+              error: isError,
+              success: isSuccess,
+            }),
+            className,
+          )}
+          {...props}
+        />
+        {rightIcon && (
+          <div className="text-muted-foreground flex items-center justify-center shrink-0">
+            {rightIcon}
+          </div>
+        )}
+        {errorText && (
+          <p className="text-xs text-red-500 font-medium tracking-wide">
+            {errorText}
+          </p>
+        )}
+        {successText && (
+          <p className="text-xs text-emerald-500 font-medium tracking-wide">
+            {successText}
+          </p>
+        )}
+        {helperText && !errorText && !successText && (
+          <p className="text-xs text-muted-foreground font-medium tracking-wide">
+            {helperText}
+          </p>
+        )}
+      </div>
+    );
+  },
+);
+
+Input.displayName = "Input";
 
 export default Input;
