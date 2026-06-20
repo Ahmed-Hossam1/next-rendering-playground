@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Weather — SSR",
+  title: "SSR — Server-Side Rendering",
   description: "Server-Side Rendering (SSR) demo — fresh product data fetched on every request.",
 };
 
@@ -33,7 +34,7 @@ async function getProduct(): Promise<Product> {
   return res.json();
 }
 
-export default async function WeatherPage() {
+export default async function SSRPage() {
   const product = await getProduct();
   const fetchedAt = new Date().toUTCString();
   const discountedPrice = (
@@ -45,6 +46,9 @@ export default async function WeatherPage() {
     <div className="page-wrapper">
       {/* Header */}
       <div className="page-header">
+        <Link href="/rendering-strategies" className="strategy-tag" style={{ marginBottom: "1rem", display: "inline-flex", textDecoration: "none" }}>
+          ← Back to Rendering Strategies
+        </Link>
         <div className="strategy-badge ssr">🌐 SSR — Server-Side Rendering</div>
         <h1 className="page-title">Server-Side Rendering</h1>
         <p className="page-description">

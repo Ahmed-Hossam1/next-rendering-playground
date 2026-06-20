@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Posts — SSG + ISR",
+  title: "ISR — Incremental Static Regeneration",
   description:
     "Incremental Static Regeneration (ISR) demo — static page that revalidates every 5 seconds.",
 };
@@ -36,7 +37,7 @@ async function getProducts(): Promise<ProductsResponse> {
   return res.json();
 }
 
-export default async function PostsPage() {
+export default async function ISRPage() {
   const data = await getProducts();
   const renderedAt = new Date().toUTCString();
 
@@ -44,6 +45,9 @@ export default async function PostsPage() {
     <div className="page-wrapper">
       {/* Header */}
       <div className="page-header">
+        <Link href="/rendering-strategies" className="strategy-tag" style={{ marginBottom: "1rem", display: "inline-flex", textDecoration: "none" }}>
+          ← Back to Rendering Strategies
+        </Link>
         <div className="strategy-badge isr">🔄 SSG + ISR — Incremental Static Regeneration</div>
         <h1 className="page-title">Products Catalog</h1>
         <p className="page-description">

@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
-
 /* ===== Design Tokens ===== */
 :root {
   --bg-primary: #0a0a0f;
@@ -47,7 +45,11 @@ html {
 }
 
 body {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
@@ -615,8 +617,12 @@ body {
 
 /* ===== Skeleton Loader ===== */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .skeleton {
@@ -667,8 +673,13 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .timestamp-text {
@@ -755,16 +766,32 @@ body {
 }
 
 .strategy-card.ssr::before {
-  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.06), transparent 60%);
+  background: radial-gradient(
+    circle at top left,
+    rgba(56, 189, 248, 0.06),
+    transparent 60%
+  );
 }
 .strategy-card.ssg::before {
-  background: radial-gradient(circle at top left, rgba(52, 211, 153, 0.06), transparent 60%);
+  background: radial-gradient(
+    circle at top left,
+    rgba(52, 211, 153, 0.06),
+    transparent 60%
+  );
 }
 .strategy-card.isr::before {
-  background: radial-gradient(circle at top left, rgba(251, 146, 60, 0.06), transparent 60%);
+  background: radial-gradient(
+    circle at top left,
+    rgba(251, 146, 60, 0.06),
+    transparent 60%
+  );
 }
 .strategy-card.csr::before {
-  background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.06), transparent 60%);
+  background: radial-gradient(
+    circle at top left,
+    rgba(167, 139, 250, 0.06),
+    transparent 60%
+  );
 }
 
 .strategy-card:hover {
@@ -825,7 +852,9 @@ body {
 .strategy-card-arrow {
   font-size: 1.2rem;
   color: var(--text-muted);
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .strategy-card:hover .strategy-card-arrow {
@@ -901,7 +930,9 @@ body {
   font-size: 0.9rem;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
   font-family: "Inter", sans-serif;
 }
 

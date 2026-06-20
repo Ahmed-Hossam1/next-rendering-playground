@@ -1,10 +1,9 @@
 import Link from "next/link";
 
 const navLinks = [
-  { href: "/about", label: "About", badge: "SSG", badgeClass: "ssg" },
-  { href: "/weather", label: "Weather", badge: "SSR", badgeClass: "ssr" },
-  { href: "/posts", label: "Posts", badge: "ISR", badgeClass: "isr" },
-  { href: "/dashboard", label: "Dashboard", badge: "CSR", badgeClass: "csr" },
+  { href: "/", label: "Home", badge: "Root", badgeClass: "ssg" },
+  { href: "/rendering-strategies", label: "Rendering Strategies", badge: "SSG/SSR/ISR/CSR", badgeClass: "ssr" },
+  { href: "/route-handlers", label: "Route Handlers", badge: "REST CRUD", badgeClass: "csr" },
 ];
 
 export function Navbar() {
@@ -15,7 +14,7 @@ export function Navbar() {
           <div className="navbar-logo">N</div>
           <div>
             <div className="navbar-title">Next Rendering</div>
-            <div className="navbar-subtitle">Playground</div>
+            <div className="navbar-subtitle">Practice Playground</div>
           </div>
         </Link>
 
@@ -24,7 +23,7 @@ export function Navbar() {
             <li key={link.href}>
               <Link href={link.href} className="nav-link">
                 {link.label}
-                <span className={`nav-badge ${link.badgeClass}`}>
+                <span className={`nav-badge ${link.badgeClass}`} style={{ fontSize: "0.55rem" }}>
                   {link.badge}
                 </span>
               </Link>

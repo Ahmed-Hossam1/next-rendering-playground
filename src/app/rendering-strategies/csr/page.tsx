@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -56,7 +57,7 @@ function SkeletonCard() {
   );
 }
 
-export default function DashboardPage() {
+export default function CSRPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -110,6 +111,9 @@ export default function DashboardPage() {
     <div className="page-wrapper">
       {/* Header */}
       <div className="page-header">
+        <Link href="/rendering-strategies" className="strategy-tag" style={{ marginBottom: "1rem", display: "inline-flex", textDecoration: "none" }}>
+          ← Back to Rendering Strategies
+        </Link>
         <div className="strategy-badge csr">🖥️ CSR — Client-Side Rendering</div>
         <h1 className="page-title">Products Dashboard</h1>
         <p className="page-description">

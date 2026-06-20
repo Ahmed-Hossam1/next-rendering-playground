@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About — SSG",
+  title: "SSG — Static Site Generation",
   description: "Static Site Generation (SSG) demo page — pre-rendered at build time.",
 };
 
@@ -38,15 +39,18 @@ const features = [
   },
 ];
 
-export default function AboutPage() {
+export default function SSGPage() {
   const buildTime = new Date().toUTCString();
 
   return (
     <div className="page-wrapper">
       {/* Header */}
       <div className="page-header">
+        <Link href="/rendering-strategies" className="strategy-tag" style={{ marginBottom: "1rem", display: "inline-flex", textDecoration: "none" }}>
+          ← Back to Rendering Strategies
+        </Link>
         <div className="strategy-badge ssg">⚡ SSG — Static Site Generation</div>
-        <h1 className="page-title">About This Playground</h1>
+        <h1 className="page-title">Static Site Generation</h1>
         <p className="page-description">
           This page is generated once at <strong>build time</strong> and served
           as a static HTML file. The timestamp below is frozen — it won't change

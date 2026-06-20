@@ -2,93 +2,75 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Next.js 16 Topics Playground",
   description:
-    "Explore Next.js rendering strategies: SSR, SSG, ISR, and CSR — all in one playground.",
+    "A playground containing comprehensive, interactive practice tasks for Next.js 16 features.",
 };
 
-const strategies = [
+const topics = [
   {
-    href: "/about",
-    type: "ssg",
-    icon: "⚡",
-    name: "Static Site Generation",
-    abbr: "SSG",
-    description:
-      "Pages built at compile time. The fastest delivery — HTML is pre-rendered and served from a CDN.",
-    tags: ["Build-time render", "No data fetching", "CDN cached"],
-  },
-  {
-    href: "/weather",
-    type: "ssr",
+    href: "/rendering-strategies",
     icon: "🌐",
-    name: "Server-Side Rendering",
-    abbr: "SSR",
-    description:
-      "Pages rendered fresh on every request. Always shows up-to-date data directly from the server.",
-    tags: ["Per-request render", "cache: no-store", "Always fresh"],
+    title: "Rendering Strategies",
+    description: "Explore Static Site Generation (SSG), Server-Side Rendering (SSR), Incremental Static Regeneration (ISR), and Client-Side Rendering (CSR).",
+    badge: "SSG, SSR, ISR, CSR",
+    badgeClass: "ssr",
+    tags: ["Build-time", "On-demand", "Revalidation", "useEffect"],
   },
   {
-    href: "/posts",
-    type: "isr",
-    icon: "🔄",
-    name: "SSG + Incremental Static Regen.",
-    abbr: "ISR",
-    description:
-      "Static pages that silently re-validate in the background every N seconds. Best of both worlds.",
-    tags: ["revalidate: 5s", "Background refresh", "Stale-while-revalidate"],
-  },
-  {
-    href: "/dashboard",
-    type: "csr",
-    icon: "🖥️",
-    name: "Client-Side Rendering",
-    abbr: "CSR",
-    description:
-      "Data fetched in the browser after the page loads. Ideal for personalised, interactive dashboards.",
-    tags: ["\"use client\"", "Browser fetch", "Dynamic UI"],
+    href: "/route-handlers",
+    icon: "⚙️",
+    title: "Route Handlers (APIs)",
+    description: "Practice building complete CRUD operations (GET, POST, PUT, DELETE) inside REST API route handlers with a live interactive database console.",
+    badge: "GET, POST, PUT, DELETE",
+    badgeClass: "csr",
+    tags: ["REST API", "Dynamic Parameters", "NextResponse", "Request Validation"],
   },
 ];
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <div className="page-wrapper">
-      <div className="home-hero">
-        <div className="home-eyebrow">✦ Next.js 16 Playground</div>
+    <div className="page-wrapper" style={{ minHeight: "80vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div className="home-hero" style={{ padding: "2rem 0 3rem" }}>
+        <div className="home-eyebrow">✦ Next.js 16 Practice Sandbox</div>
         <h1 className="home-title">
-          Rendering Strategies
+          Topics & Concepts
           <br />
-          Demystified
+          Playground
         </h1>
         <p className="home-subtitle">
-          Explore SSG, SSR, ISR, and CSR side-by-side — see exactly how each
-          strategy fetches data and delivers pages.
+          Click on any topic below to dive into code implementations, explanations, and interactive live dashboards.
         </p>
       </div>
 
-      <div className="section-label">Choose a strategy</div>
+      <div className="section-label">Select a Practice Topic</div>
 
-      <div className="strategies-grid">
-        {strategies.map((s) => (
-          <Link key={s.href} href={s.href} className={`strategy-card ${s.type}`}>
+      <div className="strategies-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
+        {topics.map((t) => (
+          <Link key={t.href} href={t.href} className="strategy-card ssr" style={{ padding: "2rem" }}>
             <div className="strategy-card-header">
-              <div className={`strategy-card-icon ${s.type}`}>{s.icon}</div>
-              <span className="strategy-card-arrow">→</span>
+              <div className="strategy-card-icon ssr" style={{ fontSize: "1.8rem", width: "56px", height: "56px" }}>
+                {t.icon}
+              </div>
+              <span className="strategy-card-arrow" style={{ fontSize: "1.5rem" }}>→</span>
             </div>
 
             <div>
-              <div className={`strategy-badge ${s.type}`} style={{ marginBottom: "0.5rem" }}>
-                {s.abbr}
-              </div>
-              <div className="strategy-card-name">{s.name}</div>
-              <div className="strategy-card-desc">{s.description}</div>
+              <span className={`strategy-badge ${t.badgeClass}`} style={{ marginBottom: "0.5rem" }}>
+                {t.badge}
+              </span>
+              <h2 className="strategy-card-name" style={{ fontSize: "1.3rem", marginTop: "0.5rem" }}>{t.title}</h2>
+              <p className="strategy-card-desc" style={{ fontSize: "0.88rem", marginTop: "0.5rem", color: "var(--text-secondary)" }}>
+                {t.description}
+              </p>
             </div>
 
-            <div className="strategy-card-tags">
-              {s.tags.map((tag) => (
+            <div className="strategy-card-tags" style={{ marginTop: "1rem" }}>
+              {t.tags.map((tag) => (
                 <span key={tag} className="strategy-tag">
                   {tag}
                 </span>
+                 
               ))}
             </div>
           </Link>
