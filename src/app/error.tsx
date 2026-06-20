@@ -4,27 +4,39 @@ import { useEffect } from "react";
 
 export default function Error({
   error,
-  unstable_retry,
+  reset,
 }: {
   error: Error & { digest?: string };
-  unstable_retry: () => void;
+  reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong from root error!</h2>
-      <button
-        onClick={
-          // Attempt to recover by re-fetching and re-rendering the segment
-          () => unstable_retry()
-        }
-      >
-        Try again
-      </button>
+    <div className="page-wrapper">
+      <div className="error-page">
+        <div className="error-icon">⚠️</div>
+        <h2 className="error-title">Something went wrong</h2>
+        <p className="error-desc">
+          {error.message || "An unexpected error occurred while rendering this page."}
+        </p>
+        {error.digest && (
+          <code
+            style={{
+              fontSize: "0.72rem",
+              color: "var(--text-muted)",
+              fontFamily: "JetBrains Mono, monospace",
+              marginTop: "0.25rem",
+            }}
+          >
+            Digest: {error.digest}
+          </code>
+        )}
+        <button className="retry-btn" onClick={reset}>
+          Try again
+        </button>
+      </div>
     </div>
   );
 }
