@@ -1,78 +1,127 @@
-# Next-Gen Design System Experience (Next.js 16 + Tailwind CSS v4)
+# Next.js Rendering Strategies Playground
 
-A premium, interactive design system showcase built using **Next.js 16 (App Router)** and **Tailwind CSS v4**. This repository serves as a workspace for training, demonstrating, and documenting modern component architectures, fluid theme adaptations, and production-ready component practices.
+A hands-on **Next.js 16** playground for practicing and understanding the four core rendering strategies — **SSG**, **SSR**, **ISR**, and **CSR** — side-by-side with real API data and a polished dark UI.
+
+---
+
+## 🗺️ Pages & Rendering Strategies
+
+| Route | Strategy | Description |
+|-------|----------|-------------|
+| `/` | — | Home — overview & navigation |
+| `/about` | **SSG** | Static Site Generation — built once at `next build`, served from CDN |
+| `/weather` | **SSR** | Server-Side Rendering — fresh render on every request (`cache: "no-store"`) |
+| `/posts` | **SSG + ISR** | Incremental Static Regeneration — static page that revalidates every 5 s |
+| `/dashboard` | **CSR** | Client-Side Rendering — data fetched in the browser with `useEffect` |
 
 ---
 
 ## ✨ Features
 
-- **🚀 Modern Tech Stack**: Powered by Next.js 16, React 19, and the lightning-fast Tailwind CSS v4.
-- **🎨 Design Token System**: Fully configured CSS variables in `@layer base` supporting smooth transition transitions between light and dark modes (powered by `next-themes`).
-- **⚙️ Dynamic Component Sandbox**: A live, interactive playground where developers can customize components (adjusting variant, size, rounded corners, icons, and loading states) and instantly copy the dynamically generated JSX code.
-- **💎 Premium glassmorphism UI**: High-end visual assets, custom blurs, animated border gradients, and grid overlays that look stunning in both light and dark themes.
-- **🛠️ Type-Safe & Polymorphic Components**: Component interfaces designed for extensibility, clean variant configurations via `class-variance-authority` (cva), and Radix UI Slot composition (`asChild`).
+- **🎨 Premium Dark UI** — custom CSS design tokens, glassmorphism navbar, smooth hover animations
+- **⚡ SSG** — `/about` shows a frozen build-time timestamp to demonstrate static generation
+- **🌐 SSR** — `/weather` shows a live server timestamp + full product detail that changes on every refresh
+- **🔄 ISR** — `/posts` renders a product catalog that revalidates in the background every 5 seconds (`next: { revalidate: 5 }`)
+- **🖥️ CSR** — `/dashboard` has a live ticking clock, skeleton loaders, and `useEffect`-based data fetching
+- **🧩 Shared Navbar** — sticky, blur-backdrop navbar with per-route strategy badges
+- **💀 Skeleton Loaders** — shimmer animation while CSR data loads
+- **📊 Live Stats** — CSR dashboard computes real-time product statistics client-side
+- **⚠️ Error Boundary** — styled root `error.tsx` with retry button
 
 ---
 
-## 🏗️ Project Directory Structure
+## 🏗️ Project Structure
 
 ```text
-practice/
-├── docs/
-│   └── Button.md        # Detailed developer guide for the Button component
-├── public/              # Static assets and icons
-└── src/
-    ├── app/
-    │   ├── globals.css  # Core styling, custom keyframe animations, and Tailwind v4 theme mappings
-    │   ├── layout.tsx   # Root layout with provider setup (Theme providers)
-    │   └── page.tsx     # The interactive Design System landing page & playground
+src/
+└── app/
     ├── components/
-    │   ├── Button.tsx   # Standard polymorphic Button component
-    │   ├── Navbar.tsx   # Global site header with theme switcher integration
-    │   └── ThemeChanger.tsx # Smooth-transition Theme Toggle (Sun/Moon icons)
-    ├── lib/
-    │   └── cn.tsx       # Classnames merging utility (clsx + tailwind-merge)
-    └── providers/       # Global React context providers (e.g. ThemeProvider)
+    │   └── Navbar.tsx        # Shared sticky navbar with SSG/SSR/ISR/CSR badges
+    ├── about/
+    │   └── page.tsx          # SSG — Static Site Generation demo
+    ├── weather/
+    │   └── page.tsx          # SSR — Server-Side Rendering demo
+    ├── posts/
+    │   └── page.tsx          # SSG + ISR — Incremental Static Regeneration demo
+    ├── dashboard/
+    │   └── page.tsx          # CSR — Client-Side Rendering demo ("use client")
+    ├── error.tsx             # Global error boundary
+    ├── layout.tsx            # Root layout with Navbar
+    ├── page.tsx              # Home page with strategy overview cards
+    └── globals.css           # Full design system (tokens, components, animations)
 ```
 
 ---
 
-## 🛠️ Design System Theme Architecture
+## 🔑 Rendering Strategy Cheat Sheet
 
-Theme tokens are configured inside [src/app/globals.css](file:///d:/coding/Next%20Js/practice/src/app/globals.css) and exposed to Tailwind CSS v4 using the new inline configuration `@theme inline`:
-
-- **Light Mode (`:root`)**: Vibrant blues, soft zinc outlines, and clean white cards over a neutral light background.
-- **Dark Mode (`.dark`)**: Deep charcoal shades, glowing primary borders, and sleek glassmorphism panels.
-
-All custom colors (such as `--primary`, `--border`, and `--muted`) can be accessed using standard utility classes (e.g., `bg-primary`, `border-border`, `text-muted-foreground`).
+### ⚡ SSG — Static Site Generation
+```tsx
+// No fetch at all, or fetch without cache directives at build time
+const Page = () => <div>Built once at `next build`</div>;
+export default Page;
+```
+✅ Fastest delivery · CDN cached · Zero server cost per request  
+❌ Content is stale until next rebuild
 
 ---
 
-## 📚 Component Documentation
+### 🌐 SSR — Server-Side Rendering
+```tsx
+// cache: "no-store" opts out of caching entirely
+const res = await fetch(url, { cache: "no-store" });
+```
+✅ Always fresh data · Great for user-specific or real-time content  
+❌ Slower TTFB · Server runs on every request
 
-Detailed API specifications, accessibility recommendations, and Do/Don't guides are maintained in the `docs/` folder:
+---
 
-- 📑 [Button Component Developer Guide](file:///d:/coding/Next%20Js/practice/docs/Button.md)
+### 🔄 ISR — Incremental Static Regeneration
+```tsx
+// next.revalidate tells Next.js to refresh the cached page every N seconds
+const res = await fetch(url, { next: { revalidate: 5 } });
+```
+✅ Static speed + periodic freshness · Stale-while-revalidate pattern  
+❌ Visitors may briefly see stale content within the revalidation window
+
+---
+
+### 🖥️ CSR — Client-Side Rendering
+```tsx
+"use client";
+useEffect(() => {
+  fetch(url).then(r => r.json()).then(setData);
+}, []);
+```
+✅ Interactive, personalised UIs · Live clocks, websockets, etc.  
+❌ Empty HTML shell on load · Not SEO-friendly without SSR/SSG wrapper
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these steps to run the interactive playground locally:
+```bash
+# Install dependencies
+npm install
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+# Start dev server
+npm run dev
+```
 
-2. **Start the Development Server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Explore the Design System**:
-   Open [http://localhost:3000](http://localhost:3000) in your browser to interact with the sandbox and browse the component gallery.
+Open [http://localhost:3000](http://localhost:3000) to explore the playground.
 
 ---
 
-Created with ❤️ by Antigravity AI
+## 🛠️ Tech Stack
+
+| Tool | Version |
+|------|---------|
+| Next.js | 16.x (App Router) |
+| React | 19.x |
+| Tailwind CSS | 4.x |
+| TypeScript | 5.x |
+| Data API | [dummyjson.com](https://dummyjson.com) |
+
+---
+
+Created with ❤️ while learning Next.js rendering strategies.
