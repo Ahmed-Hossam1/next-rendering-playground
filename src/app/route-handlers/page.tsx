@@ -16,17 +16,38 @@ export default function RouteHandlersPage() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterPart, setFilterPart] = useState("");
-  const [message, setMessage] = useState<{ text: string; type: "success" | "error" | "info" } | null>(null);
+  const [message, setMessage] = useState<{
+    text: string;
+    type: "success" | "error" | "info";
+  } | null>(null);
 
   // Form states
-  const [createForm, setCreateForm] = useState({ name: "", bodyPart: "", equipment: "", sets: "", reps: "" });
-  const [updateForm, setUpdateForm] = useState({ id: "", name: "", bodyPart: "", equipment: "", sets: "", reps: "" });
+  const [createForm, setCreateForm] = useState({
+    name: "",
+    bodyPart: "",
+    equipment: "",
+    sets: "",
+    reps: "",
+  });
+  const [updateForm, setUpdateForm] = useState({
+    id: "",
+    name: "",
+    bodyPart: "",
+    equipment: "",
+    sets: "",
+    reps: "",
+  });
   const [deleteId, setDeleteId] = useState("");
 
   // active code snippet tab
-  const [activeTab, setActiveTab] = useState<"get" | "post" | "put" | "delete">("get");
+  const [activeTab, setActiveTab] = useState<"get" | "post" | "put" | "delete">(
+    "get",
+  );
 
-  const showMessage = (text: string, type: "success" | "error" | "info" = "info") => {
+  const showMessage = (
+    text: string,
+    type: "success" | "error" | "info" = "info",
+  ) => {
     setMessage({ text, type });
     setTimeout(() => setMessage(null), 5000);
   };
@@ -34,7 +55,9 @@ export default function RouteHandlersPage() {
   const fetchExercises = async (filter = "") => {
     setLoading(true);
     try {
-      const url = filter ? `/api/exercises?bodyPart=${encodeURIComponent(filter)}` : "/api/exercises";
+      const url = filter
+        ? `/api/exercises?bodyPart=${encodeURIComponent(filter)}`
+        : "/api/exercises";
       const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch exercises");
       const data = await res.json();
@@ -47,6 +70,7 @@ export default function RouteHandlersPage() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchExercises();
   }, []);
 
@@ -69,7 +93,13 @@ export default function RouteHandlersPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create exercise");
       showMessage(`Created "${data.name}" successfully!`, "success");
-      setCreateForm({ name: "", bodyPart: "", equipment: "", sets: "", reps: "" });
+      setCreateForm({
+        name: "",
+        bodyPart: "",
+        equipment: "",
+        sets: "",
+        reps: "",
+      });
       fetchExercises();
     } catch (err: any) {
       showMessage(err.message, "error");
@@ -98,8 +128,18 @@ export default function RouteHandlersPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to update exercise");
-      showMessage(`Updated exercise #${updateForm.id} successfully!`, "success");
-      setUpdateForm({ id: "", name: "", bodyPart: "", equipment: "", sets: "", reps: "" });
+      showMessage(
+        `Updated exercise #${updateForm.id} successfully!`,
+        "success",
+      );
+      setUpdateForm({
+        id: "",
+        name: "",
+        bodyPart: "",
+        equipment: "",
+        sets: "",
+        reps: "",
+      });
       fetchExercises();
     } catch (err: any) {
       showMessage(err.message, "error");
@@ -138,40 +178,71 @@ export default function RouteHandlersPage() {
     <div className="page-wrapper">
       {/* Header */}
       <div className="page-header">
-        <Link href="/" className="strategy-tag" style={{ marginBottom: "1rem", display: "inline-flex", textDecoration: "none" }}>
+        <Link
+          href="/"
+          className="strategy-tag"
+          style={{
+            marginBottom: "1rem",
+            display: "inline-flex",
+            textDecoration: "none",
+          }}
+        >
           ← Back to Topics
         </Link>
-        <div className="strategy-badge isr" style={{ background: "rgba(167, 139, 250, 0.1)", color: "#a78bfa", borderColor: "rgba(167, 139, 250, 0.3)" }}>
+        <div
+          className="strategy-badge isr"
+          style={{
+            background: "rgba(167, 139, 250, 0.1)",
+            color: "#a78bfa",
+            borderColor: "rgba(167, 139, 250, 0.3)",
+          }}
+        >
           ⚙️ Route Handlers (APIs)
         </div>
         <h1 className="page-title">Next.js REST API CRUD</h1>
         <p className="page-description">
-          Practice building fully functional REST API route handlers. Check out how client requests trigger database actions inside Next.js API endpoints.
+          Practice building fully functional REST API route handlers. Check out
+          how client requests trigger database actions inside Next.js API
+          endpoints.
         </p>
       </div>
 
       {/* Toast notifications */}
       {message && (
-        <div style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          padding: "0.75rem 1.25rem",
-          borderRadius: "8px",
-          backgroundColor: message.type === "success" ? "rgba(52, 211, 153, 0.15)" : message.type === "error" ? "rgba(239, 68, 68, 0.15)" : "var(--bg-card)",
-          color: message.type === "success" ? "var(--ssg-color)" : message.type === "error" ? "#f87171" : "var(--text-primary)",
-          border: `1px solid ${message.type === "success" ? "var(--ssg-border)" : message.type === "error" ? "rgba(239,68,68,0.3)" : "var(--border)"}`,
-          zIndex: 9999,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-          fontSize: "0.85rem",
-        }}>
+        <div
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            padding: "0.75rem 1.25rem",
+            borderRadius: "8px",
+            backgroundColor:
+              message.type === "success"
+                ? "rgba(52, 211, 153, 0.15)"
+                : message.type === "error"
+                  ? "rgba(239, 68, 68, 0.15)"
+                  : "var(--bg-card)",
+            color:
+              message.type === "success"
+                ? "var(--ssg-color)"
+                : message.type === "error"
+                  ? "#f87171"
+                  : "var(--text-primary)",
+            border: `1px solid ${message.type === "success" ? "var(--ssg-border)" : message.type === "error" ? "rgba(239,68,68,0.3)" : "var(--border)"}`,
+            zIndex: 9999,
+            boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+            fontSize: "0.85rem",
+          }}
+        >
           {message.text}
         </div>
       )}
 
       {/* Informational specs */}
       <div className="info-card">
-        <div className="info-card-title">How API Route Handlers work in Next.js 16</div>
+        <div className="info-card-title">
+          How API Route Handlers work in Next.js 16
+        </div>
         <div className="info-card-grid">
           <div className="info-item">
             <span className="info-label">File Convention</span>
@@ -193,12 +264,16 @@ export default function RouteHandlersPage() {
       </div>
 
       {/* Grid container: Left is Database, Right is Controls */}
-      <div className="detail-layout" style={{ gridTemplateColumns: "1fr 1.2fr" }}>
-        
+      <div
+        className="detail-layout"
+        style={{ gridTemplateColumns: "1fr 1.2fr" }}
+      >
         {/* Left Side: Live Database Viewer */}
         <div>
-          <div className="section-label">📋 Live Database Viewer (exercises)</div>
-          
+          <div className="section-label">
+            📋 Live Database Viewer (exercises)
+          </div>
+
           {/* Query Filter */}
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
             <input
@@ -244,16 +319,39 @@ export default function RouteHandlersPage() {
           </div>
 
           {/* List */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxH: "450px", overflowY: "auto" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+              maxHeight: "450px",
+              overflowY: "auto",
+            }}
+          >
             {loading ? (
-              <div className="skeleton" style={{ height: "100px", borderRadius: "12px" }}></div>
+              <div
+                className="skeleton"
+                style={{ height: "100px", borderRadius: "12px" }}
+              ></div>
             ) : exercises.length === 0 ? (
-              <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", border: "1px dashed var(--border)", borderRadius: "12px" }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "2rem",
+                  color: "var(--text-muted)",
+                  border: "1px dashed var(--border)",
+                  borderRadius: "12px",
+                }}
+              >
                 No exercises found.
               </div>
             ) : (
               exercises.map((ex) => (
-                <div key={ex.id} className="feature-card" style={{ padding: "1rem", position: "relative" }}>
+                <div
+                  key={ex.id}
+                  className="feature-card"
+                  style={{ padding: "1rem", position: "relative" }}
+                >
                   <span
                     style={{
                       position: "absolute",
@@ -270,12 +368,51 @@ export default function RouteHandlersPage() {
                   >
                     ID: {ex.id}
                   </span>
-                  <div style={{ fontWeight: "700", fontSize: "0.95rem", color: "var(--text-primary)" }}>{ex.name}</div>
-                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
-                    <span className="detail-tag" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>💪 {ex.bodyPart}</span>
-                    <span className="detail-tag" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>🛠️ {ex.equipment}</span>
-                    {ex.sets && <span className="detail-tag" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>🔄 {ex.sets} Sets</span>}
-                    {ex.reps && <span className="detail-tag" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>🎯 {ex.reps} Reps</span>}
+                  <div
+                    style={{
+                      fontWeight: "700",
+                      fontSize: "0.95rem",
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    {ex.name}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "0.5rem",
+                      marginTop: "0.5rem",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <span
+                      className="detail-tag"
+                      style={{ fontSize: "0.7rem", padding: "1px 6px" }}
+                    >
+                      💪 {ex.bodyPart}
+                    </span>
+                    <span
+                      className="detail-tag"
+                      style={{ fontSize: "0.7rem", padding: "1px 6px" }}
+                    >
+                      🛠️ {ex.equipment}
+                    </span>
+                    {ex.sets && (
+                      <span
+                        className="detail-tag"
+                        style={{ fontSize: "0.7rem", padding: "1px 6px" }}
+                      >
+                        🔄 {ex.sets} Sets
+                      </span>
+                    )}
+                    {ex.reps && (
+                      <span
+                        className="detail-tag"
+                        style={{ fontSize: "0.7rem", padding: "1px 6px" }}
+                      >
+                        🎯 {ex.reps} Reps
+                      </span>
+                    )}
                   </div>
                 </div>
               ))
@@ -284,120 +421,297 @@ export default function RouteHandlersPage() {
         </div>
 
         {/* Right Side: Interactive Controls */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        >
           <div className="section-label">⚡ API Console Operations</div>
 
           {/* CREATE Form */}
-          <form onSubmit={handleCreate} className="info-card" style={{ margin: 0 }}>
-            <div className="info-card-title" style={{ color: "var(--ssg-color)", display: "flex", justifyContent: "space-between" }}>
+          <form
+            onSubmit={handleCreate}
+            className="info-card"
+            style={{ margin: 0 }}
+          >
+            <div
+              className="info-card-title"
+              style={{
+                color: "var(--ssg-color)",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               <span>POST /api/exercises</span>
-              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>CREATE</span>
+              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>
+                CREATE
+              </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginTop: "0.75rem" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.75rem",
+                marginTop: "0.75rem",
+              }}
+            >
               <input
                 type="text"
                 placeholder="Name (e.g. Hammer Curl)*"
                 required
                 value={createForm.name}
-                onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, name: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
               <input
                 type="text"
                 placeholder="Body Part (e.g. Arms)*"
                 required
                 value={createForm.bodyPart}
-                onChange={(e) => setCreateForm({ ...createForm, bodyPart: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, bodyPart: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
               <input
                 type="text"
                 placeholder="Equipment (e.g. Dumbbell)*"
                 required
                 value={createForm.equipment}
-                onChange={(e) => setCreateForm({ ...createForm, equipment: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, equipment: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
               <div style={{ display: "flex", gap: "0.5rem" }}>
                 <input
                   type="number"
                   placeholder="Sets"
                   value={createForm.sets}
-                  onChange={(e) => setCreateForm({ ...createForm, sets: e.target.value })}
-                  style={{ width: "50%", padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                  onChange={(e) =>
+                    setCreateForm({ ...createForm, sets: e.target.value })
+                  }
+                  style={{
+                    width: "50%",
+                    padding: "0.5rem",
+                    borderRadius: "6px",
+                    border: "1px solid var(--border)",
+                    backgroundColor: "var(--bg-secondary)",
+                    color: "white",
+                    fontSize: "0.8rem",
+                  }}
                 />
                 <input
                   type="number"
                   placeholder="Reps"
                   value={createForm.reps}
-                  onChange={(e) => setCreateForm({ ...createForm, reps: e.target.value })}
-                  style={{ width: "50%", padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                  onChange={(e) =>
+                    setCreateForm({ ...createForm, reps: e.target.value })
+                  }
+                  style={{
+                    width: "50%",
+                    padding: "0.5rem",
+                    borderRadius: "6px",
+                    border: "1px solid var(--border)",
+                    backgroundColor: "var(--bg-secondary)",
+                    color: "white",
+                    fontSize: "0.8rem",
+                  }}
                 />
               </div>
             </div>
-            <button type="submit" className="retry-btn" style={{ width: "100%", marginTop: "0.75rem", backgroundColor: "var(--ssg-color)", backgroundImage: "none", color: "#000" }}>
+            <button
+              type="submit"
+              className="retry-btn"
+              style={{
+                width: "100%",
+                marginTop: "0.75rem",
+                backgroundColor: "var(--ssg-color)",
+                backgroundImage: "none",
+                color: "#000",
+              }}
+            >
               Submit POST Request
             </button>
           </form>
 
           {/* UPDATE Form */}
-          <form onSubmit={handleUpdate} className="info-card" style={{ margin: 0 }}>
-            <div className="info-card-title" style={{ color: "var(--isr-color)", display: "flex", justifyContent: "space-between" }}>
+          <form
+            onSubmit={handleUpdate}
+            className="info-card"
+            style={{ margin: 0 }}
+          >
+            <div
+              className="info-card-title"
+              style={{
+                color: "var(--isr-color)",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               <span>PUT /api/exercises/[id]</span>
-              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>UPDATE</span>
+              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>
+                UPDATE
+              </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginTop: "0.75rem" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.75rem",
+                marginTop: "0.75rem",
+              }}
+            >
               <input
                 type="number"
                 placeholder="Exercise ID to Update*"
                 required
                 value={updateForm.id}
-                onChange={(e) => setUpdateForm({ ...updateForm, id: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--isr-border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setUpdateForm({ ...updateForm, id: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--isr-border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
               <input
                 type="text"
                 placeholder="New Name (Optional)"
                 value={updateForm.name}
-                onChange={(e) => setUpdateForm({ ...updateForm, name: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setUpdateForm({ ...updateForm, name: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
               <input
                 type="text"
                 placeholder="New Body Part (Optional)"
                 value={updateForm.bodyPart}
-                onChange={(e) => setUpdateForm({ ...updateForm, bodyPart: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setUpdateForm({ ...updateForm, bodyPart: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
               <input
                 type="text"
                 placeholder="New Equipment (Optional)"
                 value={updateForm.equipment}
-                onChange={(e) => setUpdateForm({ ...updateForm, equipment: e.target.value })}
-                style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                onChange={(e) =>
+                  setUpdateForm({ ...updateForm, equipment: e.target.value })
+                }
+                style={{
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
             </div>
-            <button type="submit" className="retry-btn" style={{ width: "100%", marginTop: "0.75rem", backgroundColor: "var(--isr-color)", backgroundImage: "none", color: "#000" }}>
+            <button
+              type="submit"
+              className="retry-btn"
+              style={{
+                width: "100%",
+                marginTop: "0.75rem",
+                backgroundColor: "var(--isr-color)",
+                backgroundImage: "none",
+                color: "#000",
+              }}
+            >
               Submit PUT Request
             </button>
           </form>
 
           {/* DELETE Form */}
-          <form onSubmit={handleDelete} className="info-card" style={{ margin: 0 }}>
-            <div className="info-card-title" style={{ color: "#f87171", display: "flex", justifyContent: "space-between" }}>
+          <form
+            onSubmit={handleDelete}
+            className="info-card"
+            style={{ margin: 0 }}
+          >
+            <div
+              className="info-card-title"
+              style={{
+                color: "#f87171",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               <span>DELETE /api/exercises/[id]</span>
-              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>DELETE</span>
+              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>
+                DELETE
+              </span>
             </div>
-            <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.75rem" }}>
+            <div
+              style={{ display: "flex", gap: "0.75rem", marginTop: "0.75rem" }}
+            >
               <input
                 type="number"
                 placeholder="Exercise ID to Delete*"
                 required
                 value={deleteId}
                 onChange={(e) => setDeleteId(e.target.value)}
-                style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid rgba(239, 68, 68, 0.4)", backgroundColor: "var(--bg-secondary)", color: "white", fontSize: "0.8rem" }}
+                style={{
+                  flex: 1,
+                  padding: "0.5rem",
+                  borderRadius: "6px",
+                  border: "1px solid rgba(239, 68, 68, 0.4)",
+                  backgroundColor: "var(--bg-secondary)",
+                  color: "white",
+                  fontSize: "0.8rem",
+                }}
               />
-              <button type="submit" className="retry-btn" style={{ margin: 0, backgroundColor: "#f87171", backgroundImage: "none", color: "#000" }}>
+              <button
+                type="submit"
+                className="retry-btn"
+                style={{
+                  margin: 0,
+                  backgroundColor: "#f87171",
+                  backgroundImage: "none",
+                  color: "#000",
+                }}
+              >
                 Submit DELETE Request
               </button>
             </div>
@@ -406,7 +720,9 @@ export default function RouteHandlersPage() {
           {/* Dynamic Code Snippets Reference */}
           <div className="info-card" style={{ margin: 0 }}>
             <div className="info-card-title">Code Snippet Preview</div>
-            <div style={{ display: "flex", gap: "0.25rem", margin: "0.5rem 0" }}>
+            <div
+              style={{ display: "flex", gap: "0.25rem", margin: "0.5rem 0" }}
+            >
               {(["get", "post", "put", "delete"] as const).map((tab) => (
                 <button
                   key={tab}
@@ -416,8 +732,12 @@ export default function RouteHandlersPage() {
                     fontSize: "0.75rem",
                     borderRadius: "6px",
                     border: "1px solid var(--border)",
-                    backgroundColor: activeTab === tab ? "var(--border-hover)" : "transparent",
-                    color: activeTab === tab ? "var(--text-primary)" : "var(--text-secondary)",
+                    backgroundColor:
+                      activeTab === tab ? "var(--border-hover)" : "transparent",
+                    color:
+                      activeTab === tab
+                        ? "var(--text-primary)"
+                        : "var(--text-secondary)",
                     cursor: "pointer",
                     textTransform: "uppercase",
                     fontWeight: 600,
@@ -427,23 +747,23 @@ export default function RouteHandlersPage() {
                 </button>
               ))}
             </div>
-            <pre style={{
-              backgroundColor: "var(--bg-secondary)",
-              padding: "0.75rem",
-              borderRadius: "8px",
-              border: "1px solid var(--border)",
-              fontFamily: "JetBrains Mono, monospace",
-              fontSize: "0.75rem",
-              color: "#a78bfa",
-              overflowX: "auto",
-              whiteSpace: "pre-wrap",
-            }}>
+            <pre
+              style={{
+                backgroundColor: "var(--bg-secondary)",
+                padding: "0.75rem",
+                borderRadius: "8px",
+                border: "1px solid var(--border)",
+                fontFamily: "JetBrains Mono, monospace",
+                fontSize: "0.75rem",
+                color: "#a78bfa",
+                overflowX: "auto",
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {codeSnippets[activeTab]}
             </pre>
           </div>
-
         </div>
-
       </div>
     </div>
   );

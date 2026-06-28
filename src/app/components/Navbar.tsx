@@ -2,8 +2,24 @@ import Link from "next/link";
 
 const navLinks = [
   { href: "/", label: "Home", badge: "Root", badgeClass: "ssg" },
-  { href: "/rendering-strategies", label: "Rendering Strategies", badge: "SSG/SSR/ISR/CSR", badgeClass: "ssr" },
-  { href: "/route-handlers", label: "Route Handlers", badge: "REST CRUD", badgeClass: "csr" },
+  {
+    href: "/rendering-strategies",
+    label: "Rendering Strategies",
+    badge: "SSG/SSR/ISR/CSR",
+    badgeClass: "ssr",
+  },
+  {
+    href: "/feature-based-architecture",
+    label: "Feature-Based Architecture",
+    badge: "Feature Folders",
+    badgeClass: "csr",
+  },
+  {
+    href: "/route-handlers",
+    label: "Route Handlers",
+    badge: "REST CRUD",
+    badgeClass: "csr",
+  },
 ];
 
 export function Navbar() {
@@ -23,7 +39,10 @@ export function Navbar() {
             <li key={link.href}>
               <Link href={link.href} className="nav-link">
                 {link.label}
-                <span className={`nav-badge ${link.badgeClass}`} style={{ fontSize: "0.55rem" }}>
+                <span
+                  className={`nav-badge ${link.badgeClass}`}
+                  style={{ fontSize: "0.55rem" }}
+                >
                   {link.badge}
                 </span>
               </Link>
